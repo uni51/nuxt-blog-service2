@@ -21,9 +21,13 @@ export const mutations = {
 };
 
 export const actions = {
+  async fetchPost({ commit }, { id }) {
+    const posts = await this.$axios.$get(`/posts/${id}.json`);
+    commit("addPosts", { post: { ...post, id } });
+  },
   async fetchPosts({ commit }) {
     const posts = await this.$axios.$get(`/posts.json`);
-    commit(`clearPosts`);
+    commit("clearPosts");
     Object.entries(posts)
       .reverse()
       .forEach(([id, content]) =>
